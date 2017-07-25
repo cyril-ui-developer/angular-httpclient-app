@@ -1,7 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule , HTTP_INTERCEPTORS} from '@angular/common/http';
+
+import { AppGithubInterceptor } from './app.intercepter';
 
 import { AppComponent } from './app.component';
 
@@ -12,9 +14,13 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpClientModule
   ],
-  providers: [],
+  providers: [{
+  provide: HTTP_INTERCEPTORS,
+  useClass: AppGithubInterceptor,
+  multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
